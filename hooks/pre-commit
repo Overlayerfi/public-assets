@@ -1,0 +1,14 @@
+#!/bin/sh
+# Validates tokens.json → local asset paths. Enable once per clone:
+#   git config core.hooksPath hooks
+
+set -e
+ROOT="$(git rev-parse --show-toplevel)"
+cd "$ROOT"
+
+if ! command -v python3 >/dev/null 2>&1; then
+  echo "pre-commit: python3 is required for verify-token-assets" >&2
+  exit 1
+fi
+
+exec python3 "$ROOT/scripts/verify-token-assets.py"
